@@ -5,20 +5,17 @@ class productController {
         try {
             const { title, price, stock, CategoryId } = req.body
             if (!CategoryId) {
-                throw {
-                    code: 400,
+                return res.status(400).json({
                     message: 'CategoryId is required'
-                }
+                })
             }
 
-            
             const category = await Category.findByPk(CategoryId);
 
             if (!category) {
-                throw {
-                    code: 404,
+                return res.status(404).json({
                     message: 'Category not found'
-                }
+                })
             }
             const newProduct = await Product.create({
                 title,
